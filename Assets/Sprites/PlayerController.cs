@@ -98,7 +98,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("falling", true);
             }
         }
-        else if (coll.IsTouchingLayers(ground))
+        if (_anim.GetBool("falling") && coll.IsTouchingLayers(ground))
         {
             _anim.SetBool("falling", false);
             _anim.SetBool("idling", true);
@@ -106,6 +106,7 @@ public class PlayerController : MonoBehaviour
         if (_rb.velocity.y < 0 && !coll.IsTouchingLayers(ground))
         {
             _anim.SetBool("falling", true);
+            _anim.SetBool("jumping", false);
         }
     }
 
@@ -135,8 +136,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("falling", false);
             }
             //受伤
-
-            if (_anim.GetBool("idling") || _anim.GetBool("running")|| _anim.GetBool("jumping"))
+            if (_anim.GetBool("idling") || _anim.GetFloat("running") >0.1f|| _anim.GetBool("jumping"))
             {
                 if (transform.position.x < col.gameObject.transform.position.x)
                 {

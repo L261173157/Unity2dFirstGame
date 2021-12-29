@@ -54,7 +54,11 @@ public class PlayerController : MonoBehaviour
         if (_horizontalMove != 0)
         {
             _rb.velocity = new Vector2(_horizontalMove * speed, _rb.velocity.y);
-            _anim.SetFloat("running", Mathf.Abs(_faceDirection));
+            if (!_anim.GetBool("jumping"))
+            {
+                _anim.SetBool("running", true);
+            }
+            _anim.SetBool("running",true);
         }
 
         if (_faceDirection != 0)
@@ -67,6 +71,7 @@ public class PlayerController : MonoBehaviour
         {
             _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
             _anim.SetBool("jumping", true);
+            _anim.SetBool("running",false);
         }
 
         //角色下蹲
@@ -107,6 +112,7 @@ public class PlayerController : MonoBehaviour
         {
             _anim.SetBool("falling", true);
             _anim.SetBool("jumping", false);
+            _anim.SetBool("running",false);
         }
     }
 
@@ -136,7 +142,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("falling", false);
             }
             //受伤
-            if (_anim.GetBool("idling") || _anim.GetFloat("running") >0.1f|| _anim.GetBool("jumping"))
+            if (_anim.GetBool("idling") || _anim.GetBool("running")|| _anim.GetBool("jumping"))
             {
                 if (transform.position.x < col.gameObject.transform.position.x)
                 {

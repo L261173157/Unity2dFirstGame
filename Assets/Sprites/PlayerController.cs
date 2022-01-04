@@ -58,7 +58,14 @@ public class PlayerController : MonoBehaviour
             {
                 _anim.SetBool("running", true);
             }
-            _anim.SetBool("running",true);
+            else
+            {
+                _anim.SetBool("running", false);
+            }
+        }
+        else
+        {
+            _anim.SetBool("running", false);
         }
 
         if (_faceDirection != 0)
@@ -67,11 +74,14 @@ public class PlayerController : MonoBehaviour
         }
 
         //角色跳跃
-        if (_isJumpPressed && coll.IsTouchingLayers(ground))
+        if (_isJumpPressed)
         {
-            _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
-            _anim.SetBool("jumping", true);
-            _anim.SetBool("running",false);
+            if (coll.IsTouchingLayers(ground))
+            {
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
+                _anim.SetBool("jumping", true);
+                _anim.SetBool("running", false);
+            }
         }
 
         //角色下蹲
@@ -112,7 +122,7 @@ public class PlayerController : MonoBehaviour
         {
             _anim.SetBool("falling", true);
             _anim.SetBool("jumping", false);
-            _anim.SetBool("running",false);
+            _anim.SetBool("running", false);
         }
     }
 
@@ -136,13 +146,16 @@ public class PlayerController : MonoBehaviour
             //消灭敌人
             if (_anim.GetBool("falling"))
             {
-                Destroy(col.gameObject);
+                var enemy = col.gameObject.GetComponent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.JumpOn();
+                }
                 _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);
             }
-            //受伤
-            if (_anim.GetBool("idling") || _anim.GetBool("running")|| _anim.GetBool("jumping"))
+            else
             {
                 if (transform.position.x < col.gameObject.transform.position.x)
                 {

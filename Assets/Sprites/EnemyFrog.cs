@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyFrog : MonoBehaviour
+public class EnemyFrog : Enemy
 {
     public float speed;
     public float jumpforce;
@@ -12,7 +12,6 @@ public class EnemyFrog : MonoBehaviour
 
     private Rigidbody2D rb;
     private Collider2D coll;
-    private Animator anim;
 
     //0=left,1=right
     private bool FaceDirection;
@@ -23,11 +22,11 @@ public class EnemyFrog : MonoBehaviour
     private bool frogIdleFinished;
 
     // Start is called before the first frame update
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<Collider2D>();
-        anim = GetComponent<Animator>();
 
         transform.DetachChildren();
         left = LeftPoint.position.x;
@@ -45,7 +44,10 @@ public class EnemyFrog : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Movement();
+        if (!m_Animator.GetCurrentAnimatorStateInfo(0).IsName("death"))
+        {
+            Movement();
+        }
     }
 
     private void Movement()
@@ -58,7 +60,7 @@ public class EnemyFrog : MonoBehaviour
             {
                 rb.velocity = new Vector2(-speed, jumpforce);
 
-                anim.SetBool("jumping", true);
+                m_Animator.SetBool("jumping", true);
                 frogIdleFinished = false;
             }
             if (!coll.IsTouchingLayers(ground))
@@ -79,7 +81,7 @@ public class EnemyFrog : MonoBehaviour
             {
                 rb.velocity = new Vector2(speed, jumpforce);
 
-                anim.SetBool("jumping", true);
+                m_Animator.SetBool("jumping", true);
                 frogIdleFinished = false;
             }
             if (!coll.IsTouchingLayers(ground))
@@ -96,14 +98,14 @@ public class EnemyFrog : MonoBehaviour
 
     private void SwithAnim()
     {
-        if (anim.GetBool("jumping") && rb.velocity.y < 0)
+        if (m_Animator.GetBool("jumping") && rb.velocity.y < 0)
         {
-            anim.SetBool("jumping", false);
-            anim.SetBool("falling", true);
+            m_Animator.SetBool("jumping", false);
+            m_Animator.SetBool("falling", true);
         }
-        if (anim.GetBool("falling") && coll.IsTouchingLayers(ground))
+        if (m_Animator.GetBool("falling") && coll.IsTouchingLayers(ground))
         {
-            anim.SetBool("falling", false);
+            m_Animator.SetBool("falling", false);
         }
     }
 

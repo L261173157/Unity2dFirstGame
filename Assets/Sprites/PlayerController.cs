@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         //角色移动
         if (_horizontalMove != 0)
         {
-            _rb.velocity = new Vector2(_horizontalMove * speed, _rb.velocity.y);
+            _rb.velocity = new Vector2(_horizontalMove * speed*Time.fixedDeltaTime, _rb.velocity.y);
             if (!_anim.GetBool("jumping"))
             {
                 _anim.SetBool("running", true);
@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour
         {
             if (coll.IsTouchingLayers(ground))
             {
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce*Time.fixedDeltaTime);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("running", false);
             }
@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 {
                     enemy.JumpOn();
                 }
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce*Time.fixedDeltaTime);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);
             }

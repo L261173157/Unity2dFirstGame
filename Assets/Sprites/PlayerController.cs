@@ -90,12 +90,12 @@ public class PlayerController : MonoBehaviour
             if (_vertical < 0)
             {
                 _anim.SetBool("crouching", true);
-                boxColl.isTrigger = true;
+                boxColl.enabled = false;
             }
             else if (!boxColl.IsTouchingLayers(resister))
             {
                 _anim.SetBool("crouching", false);
-                boxColl.isTrigger = false;
+                boxColl.enabled = true;
             }
         }
     }

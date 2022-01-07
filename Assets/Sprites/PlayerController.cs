@@ -1,7 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
@@ -13,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpforce;
     public Text cherryNumber;
+    public Transform resisterCheckPoint;
 
     private int _cherry;
     private Rigidbody2D _rb;
@@ -53,7 +52,7 @@ public class PlayerController : MonoBehaviour
         //角色移动
         if (_horizontalMove != 0)
         {
-            _rb.velocity = new Vector2(_horizontalMove * speed*Time.fixedDeltaTime, _rb.velocity.y);
+            _rb.velocity = new Vector2(_horizontalMove * speed * Time.fixedDeltaTime, _rb.velocity.y);
             if (!_anim.GetBool("jumping"))
             {
                 _anim.SetBool("running", true);
@@ -78,7 +77,7 @@ public class PlayerController : MonoBehaviour
         {
             if (coll.IsTouchingLayers(ground))
             {
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce*Time.fixedDeltaTime);
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce * Time.fixedDeltaTime);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("running", false);
             }
@@ -92,7 +91,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("crouching", true);
                 boxColl.enabled = false;
             }
-            else if (!boxColl.IsTouchingLayers(resister))
+            else if (!Physics2D.OverlapCircle(resisterCheckPoint.position, 0.2f, resister))
             {
                 _anim.SetBool("crouching", false);
                 boxColl.enabled = true;
@@ -126,9 +125,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //获取物品
+    //触碰触发
     private void OnTriggerEnter2D(Collider2D col)
     {
+        //获取物品
         if (col.CompareTag("Items"))
         {
             //col.GetComponent<BoxCollider2D>().enabled = false;
@@ -136,11 +136,18 @@ public class PlayerController : MonoBehaviour
             _cherry++;
             cherryNumber.text = _cherry.ToString();
         }
+        //死亡
+        if (col.CompareTag("DeadLine"))
+        {
+            GetComponent<AudioSource>().enabled = false;
+            Invoke("Restart", 1f);
+        }
     }
 
-    //遇到敌人
+    //遇到物体
     private void OnCollisionEnter2D(Collision2D col)
     {
+        //遇到敌人
         if (col.gameObject.tag == "Enemy")
         {
             //消灭敌人
@@ -151,7 +158,7 @@ public class PlayerController : MonoBehaviour
                 {
                     enemy.JumpOn();
                 }
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce*Time.fixedDeltaTime);
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce * Time.fixedDeltaTime);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);
             }
@@ -185,5 +192,11 @@ public class PlayerController : MonoBehaviour
     {
         _anim.SetBool("hurting", false);
         _anim.SetBool("idling", true);
+    }
+
+    //重启当前场景
+    private void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

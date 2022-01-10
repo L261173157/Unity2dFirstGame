@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public Collider2D coll;
-    public Collider2D boxColl;
     public LayerMask ground;
     public LayerMask resister;
     public float speed;
@@ -31,12 +30,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        _isJumpPressed = Input.GetButtonDown("Jump");
+        _isJumpPressed = Input.GetButton("Jump");
         _horizontalMove = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
         _faceDirection = Input.GetAxisRaw("Horizontal");
 
-        SwithAnim();
+        SwitchAnim();
     }
 
     private void FixedUpdate()
@@ -89,20 +88,19 @@ public class PlayerController : MonoBehaviour
             if (_vertical < 0)
             {
                 _anim.SetBool("crouching", true);
-                boxColl.enabled = false;
+                //boxColl.enabled = false;
             }
             else if (!Physics2D.OverlapCircle(resisterCheckPoint.position, 0.2f, resister))
             {
                 _anim.SetBool("crouching", false);
-                boxColl.enabled = true;
+                //boxColl.enabled = true;
             }
         }
     }
 
     //切换动画效果
-    private void SwithAnim()
+    private void SwitchAnim()
     {
-        _anim.SetBool("idling", false);
         //跳跃
         if (_anim.GetBool("jumping"))
         {
@@ -115,7 +113,6 @@ public class PlayerController : MonoBehaviour
         if (_anim.GetBool("falling") && coll.IsTouchingLayers(ground))
         {
             _anim.SetBool("falling", false);
-            _anim.SetBool("idling", true);
         }
         if (_rb.velocity.y < 0 && !coll.IsTouchingLayers(ground))
         {
@@ -191,7 +188,6 @@ public class PlayerController : MonoBehaviour
     private void Recover()
     {
         _anim.SetBool("hurting", false);
-        _anim.SetBool("idling", true);
     }
 
     //重启当前场景

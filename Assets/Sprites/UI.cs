@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    public GameObject PauseMenu;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -14,13 +16,15 @@ public class UI : MonoBehaviour
     {
     }
 
-    public void ResumeEnable()
+    public void PauseGame()
     {
-        GameObject.Find("Canvas/Resume").SetActive(true);
+       // GameObject.Find("Canvas/Resume").SetActive(true);
+        PauseMenu.SetActive(true);
     }
 
-    public void ResumeDisable()
+    public void ResumeGame()
     {
-        GameObject.Find("Canvas/Resume").SetActive(false);
+       // GameObject.Find("Canvas/Resume").SetActive(false);
+        PauseMenu.SetActive(false);
     }
 }

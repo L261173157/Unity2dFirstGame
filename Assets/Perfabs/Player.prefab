@@ -355,10 +355,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   speed: 200
-  jumpforce: 250
+  jumpforce: 5
   cherryNumber: {fileID: 0}
   resisterCheck: {fileID: 4864387673793032464}
   jumpCheck: {fileID: 8244194117575564373}
+  _isJumpPressed: 0
+  _touchGround: 0
+  _extraJump: 0
 --- !u!1 &6311960234374116109
 GameObject:
   m_ObjectHideFlags: 0

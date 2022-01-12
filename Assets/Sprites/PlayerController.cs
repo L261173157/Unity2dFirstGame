@@ -15,12 +15,15 @@ public class PlayerController : MonoBehaviour
     private int _cherry;
     private Rigidbody2D _rb;
     private Animator _anim;
+    [SerializeField]
     private bool _isJumpPressed;
     private float _horizontalMove;
     private float _vertical;
     private float _faceDirection;
+
     [SerializeField]
     private bool _touchGround;
+
     [SerializeField]
     private int _extraJump;
 
@@ -34,7 +37,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        _isJumpPressed = Input.GetButton("Jump");
+        if (Input.GetButtonDown("Jump"))
+        {
+            _isJumpPressed = true;
+        }
+        //_isJumpPressed = Input.GetButtonDown("Jump");
         _horizontalMove = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
         _faceDirection = Input.GetAxisRaw("Horizontal");
@@ -80,13 +87,15 @@ public class PlayerController : MonoBehaviour
         //角色跳跃
         if (_isJumpPressed)
         {
-            if (_touchGround || _extraJump > 0)
+            if (_extraJump > 0)
             {
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce * Time.fixedDeltaTime);
+                _rb.velocity = Vector2.up * jumpforce;
                 _extraJump--;
                 _anim.SetBool("jumping", true);
+                _anim.SetBool("falling", false);
                 _anim.SetBool("running", false);
             }
+            _isJumpPressed = false;
         }
 
         //角色下蹲
@@ -110,7 +119,8 @@ public class PlayerController : MonoBehaviour
     {
         //跳跃
         if (_anim.GetBool("jumping"))
-        {
+        {   
+            //下落动画
             if (_rb.velocity.y < 0)
             {
                 _anim.SetBool("jumping", false);
@@ -209,7 +219,11 @@ public class PlayerController : MonoBehaviour
         _touchGround = Physics2D.OverlapCircle(jumpCheck.position, 0.2f, ground);
         if (_touchGround)
         {
-            _extraJump = 2;
+            _extraJump = 1;
         }
+
+       
     }
+
+    
 }

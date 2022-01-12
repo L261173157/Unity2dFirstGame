@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public float jumpforce;
     public Text cherryNumber;
-    public Transform resisterCheckPoint;
+    public Transform resisterCheck, jumpCheck;
 
     private int _cherry;
     private Rigidbody2D _rb;
@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     private float _horizontalMove;
     private float _vertical;
     private float _faceDirection;
+    [SerializeField]
+    private bool _touchGround;
+    [SerializeField]
+    private int _extraJump;
 
     // Start is called before the first frame update
     private void Start()
@@ -40,6 +44,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        CheckStatus();
+
         if (!_anim.GetBool("hurting"))
         {
             Movement();
@@ -74,23 +80,24 @@ public class PlayerController : MonoBehaviour
         //角色跳跃
         if (_isJumpPressed)
         {
-            if (coll.IsTouchingLayers(ground))
+            if (_touchGround || _extraJump > 0)
             {
                 _rb.velocity = new Vector2(_rb.velocity.x, jumpforce * Time.fixedDeltaTime);
+                _extraJump--;
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("running", false);
             }
         }
 
         //角色下蹲
-        if (coll.IsTouchingLayers(ground))
+        if (_touchGround)
         {
             if (_vertical < 0)
             {
                 _anim.SetBool("crouching", true);
                 //boxColl.enabled = false;
             }
-            else if (!Physics2D.OverlapCircle(resisterCheckPoint.position, 0.2f, resister))
+            else if (!Physics2D.OverlapCircle(resisterCheck.position, 0.2f, resister))
             {
                 _anim.SetBool("crouching", false);
                 //boxColl.enabled = true;
@@ -110,11 +117,11 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("falling", true);
             }
         }
-        if (_anim.GetBool("falling") && coll.IsTouchingLayers(ground))
+        if (_anim.GetBool("falling") && _touchGround)
         {
             _anim.SetBool("falling", false);
         }
-        if (_rb.velocity.y < 0 && !coll.IsTouchingLayers(ground))
+        if (_rb.velocity.y < 0 && !_touchGround)
         {
             _anim.SetBool("falling", true);
             _anim.SetBool("jumping", false);
@@ -194,5 +201,15 @@ public class PlayerController : MonoBehaviour
     private void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    //状态检查
+    private void CheckStatus()
+    {
+        _touchGround = Physics2D.OverlapCircle(jumpCheck.position, 0.2f, ground);
+        if (_touchGround)
+        {
+            _extraJump = 2;
+        }
     }
 }

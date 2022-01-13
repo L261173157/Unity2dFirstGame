@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour
             if (_extraJump > 0)
             {
                 _rb.velocity = Vector2.up * jumpforce;
+                SoundManager.Instance.Jump();
                 _extraJump--;
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);

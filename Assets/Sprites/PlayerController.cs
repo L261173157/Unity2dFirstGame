@@ -4,19 +4,23 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Collider2D coll;
+    public CapsuleCollider2D coll;
     public LayerMask ground;
     public LayerMask resister;
     public float speed;
     public float jumpforce;
     public Text cherryNumber;
-    public Transform resisterCheck, jumpCheck;
+    public Transform headCheck, footCheck;
 
     private int _cherry;
     private Rigidbody2D _rb;
     private Animator _anim;
+
+    private Vector2 _collOffset, _collSize;
+
     [SerializeField]
     private bool _isJumpPressed;
+
     private float _horizontalMove;
     private float _vertical;
     private float _faceDirection;
@@ -32,6 +36,8 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _anim = GetComponent<Animator>();
+        _collOffset = coll.offset;
+        _collSize = coll.size;
     }
 
     // Update is called once per frame
@@ -90,7 +96,7 @@ public class PlayerController : MonoBehaviour
             if (_extraJump > 0)
             {
                 _rb.velocity = Vector2.up * jumpforce;
-                SoundManager.Instance.Jump();
+                SoundManagerNew.Instance.Jump();
                 _extraJump--;
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);
@@ -105,12 +111,14 @@ public class PlayerController : MonoBehaviour
             if (_vertical < 0)
             {
                 _anim.SetBool("crouching", true);
-                //boxColl.enabled = false;
+                coll.offset = new Vector2(0, -0.6f);
+                coll.size = new Vector2(0.8f, 0.8f);
             }
-            else if (!Physics2D.OverlapCircle(resisterCheck.position, 0.2f, resister))
+            else if (!Physics2D.OverlapCircle(headCheck.position, 0.2f, resister))
             {
                 _anim.SetBool("crouching", false);
-                //boxColl.enabled = true;
+                coll.offset = _collOffset;
+                coll.size = _collSize;
             }
         }
     }
@@ -120,7 +128,7 @@ public class PlayerController : MonoBehaviour
     {
         //跳跃
         if (_anim.GetBool("jumping"))
-        {   
+        {
             //下落动画
             if (_rb.velocity.y < 0)
             {
@@ -154,7 +162,7 @@ public class PlayerController : MonoBehaviour
         //死亡
         if (col.CompareTag("DeadLine"))
         {
-            GetComponent<AudioSource>().enabled = false;
+            SoundManagerNew.Instance.StopAllAudio();
             Invoke("Restart", 1f);
         }
     }
@@ -173,11 +181,11 @@ public class PlayerController : MonoBehaviour
                 {
                     enemy.JumpOn();
                 }
-                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce * Time.fixedDeltaTime);
+                _rb.velocity = new Vector2(_rb.velocity.x, jumpforce);
                 _anim.SetBool("jumping", true);
                 _anim.SetBool("falling", false);
             }
-            else
+            else //受伤
             {
                 if (transform.position.x < col.gameObject.transform.position.x)
                 {
@@ -198,7 +206,7 @@ public class PlayerController : MonoBehaviour
     private void Hurt()
     {
         _anim.SetBool("hurting", true);
-
+        SoundManagerNew.Instance.Hurt();
         Invoke("Recover", 0.5f);
     }
 
@@ -211,20 +219,17 @@ public class PlayerController : MonoBehaviour
     //重启当前场景
     private void Restart()
     {
+        SoundManagerNew.Instance.StartAllAudio();
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //状态检查
     private void CheckStatus()
     {
-        _touchGround = Physics2D.OverlapCircle(jumpCheck.position, 0.2f, ground);
+        _touchGround = Physics2D.OverlapCircle(footCheck.position, 0.2f, ground) || Physics2D.OverlapCircle(footCheck.position, 0.2f, resister);
         if (_touchGround)
         {
             _extraJump = 1;
         }
-
-       
     }
-
-    
 }

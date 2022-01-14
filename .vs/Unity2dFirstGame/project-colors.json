@@ -5,7 +5,12 @@
       "ProjectGuid": "b61f8806-4ec0-746d-7e59-9dc560fcaf1b",
       "DisplayName": "Assembly-CSharp",
       "ColorIndex": 0
+    },
+    "06881fb6-c04e-6d74-7e59-9dc560fcaf1b": {
+      "ProjectGuid": "06881fb6-c04e-6d74-7e59-9dc560fcaf1b",
+      "DisplayName": "Assembly-CSharp",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 1
+  "NextColorIndex": 2
 }

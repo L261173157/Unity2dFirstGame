@@ -18,29 +18,29 @@ public class UI : MonoBehaviour
     private void Update()
     {
     }
-    //ÔİÍ£ÓÎÏ·
+    //ï¿½ï¿½Í£ï¿½ï¿½Ï·
     public void PauseGame()
     {
         // GameObject.Find("Canvas/Resume").SetActive(true);
         PauseMenu.SetActive(true);
         Time.timeScale = 0f;
     }
-    //·µ»ØÓÎÏ·
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·
     public void ResumeGame()
     {
         // GameObject.Find("Canvas/Resume").SetActive(false);
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
-
-    //ÉèÖÃÒôÁ¿
+    //æ§åˆ¶éŸ³é‡
     public void SetVolume(float value)
     {
         AudioMixer.SetFloat("MainVolume", value);
     }
-    //·µ»ØÖ÷²Ëµ¥
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ëµï¿½
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
     }
+
 }

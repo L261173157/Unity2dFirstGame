@@ -126,6 +126,11 @@ public class PlayerController : MonoBehaviour
     //切换动画效果
     private void SwitchAnim()
     {
+        //下落动画取消
+        if (_anim.GetBool("falling") && _touchGround)
+        {
+            _anim.SetBool("falling", false);
+        }
         //跳跃
         if (_anim.GetBool("jumping"))
         {
@@ -136,10 +141,7 @@ public class PlayerController : MonoBehaviour
                 _anim.SetBool("falling", true);
             }
         }
-        if (_anim.GetBool("falling") && _touchGround)
-        {
-            _anim.SetBool("falling", false);
-        }
+        //下落动画
         if (_rb.velocity.y < 0 && !_touchGround)
         {
             _anim.SetBool("falling", true);

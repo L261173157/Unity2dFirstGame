@@ -9,26 +9,16 @@ public class UI : MonoBehaviour
     public GameObject PauseMenu;
 
     public AudioMixer AudioMixer;
-    // Start is called before the first frame update
-    private void Start()
-    {
-    }
 
-    // Update is called once per frame
-    private void Update()
-    {
-    }
-    //��ͣ��Ϸ
+    //暂停游戏
     public void PauseGame()
     {
-        // GameObject.Find("Canvas/Resume").SetActive(true);
         PauseMenu.SetActive(true);
         Time.timeScale = 0f;
     }
-    //������Ϸ
+    //恢复游戏
     public void ResumeGame()
     {
-        // GameObject.Find("Canvas/Resume").SetActive(false);
         PauseMenu.SetActive(false);
         Time.timeScale = 1f;
     }
@@ -37,7 +27,7 @@ public class UI : MonoBehaviour
     {
         AudioMixer.SetFloat("MainVolume", value);
     }
-    //�������˵�
+    //返回主菜单
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);

@@ -20,7 +20,18 @@ public class SoundManagerNew : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
+        //多场景调用使用声音
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+        DontDestroyOnLoad(gameObject);
+
     }
 
     public void Jump()

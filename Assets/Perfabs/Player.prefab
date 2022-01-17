@@ -260,8 +260,8 @@ MonoBehaviour:
   speed: 200
   jumpforce: 6
   cherryNumber: {fileID: 0}
-  resisterCheck: {fileID: 4864387673793032464}
-  jumpCheck: {fileID: 8244194117575564373}
+  headCheck: {fileID: 4864387673793032464}
+  footCheck: {fileID: 8244194117575564373}
   _isJumpPressed: 0
   _touchGround: 0
   _extraJump: 0
@@ -275,7 +275,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8244194117575564373}
   m_Layer: 0
-  m_Name: jumpCheck
+  m_Name: footPoint
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -305,7 +305,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4864387673793032464}
   m_Layer: 0
-  m_Name: resisterCheck
+  m_Name: headPoint
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

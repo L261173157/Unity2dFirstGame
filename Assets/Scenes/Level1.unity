@@ -427,11 +427,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &245442433 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4864387673793032464, guid: 89f03409164721c4b8933201ca387119, type: 3}
-  m_PrefabInstance: {fileID: 2702193113414765448}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &249241654
 GameObject:
   m_ObjectHideFlags: 0
@@ -2995,11 +2990,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1417628639}
   m_CullTransparentMesh: 1
---- !u!4 &1527900100 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8244194117575564373, guid: 89f03409164721c4b8933201ca387119, type: 3}
-  m_PrefabInstance: {fileID: 2702193113414765448}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1530966466
 GameObject:
   m_ObjectHideFlags: 0
@@ -5228,40 +5218,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2702193112409002979, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: footCheck
-      value: 
-      objectReference: {fileID: 1527900100}
-    - target: {fileID: 2702193112409002979, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: headCheck
-      value: 
-      objectReference: {fileID: 245442433}
-    - target: {fileID: 2702193112409002979, guid: 89f03409164721c4b8933201ca387119, type: 3}
       propertyPath: cherryNumber
       value: 
       objectReference: {fileID: 1035424818}
     - target: {fileID: 2702193112409002990, guid: 89f03409164721c4b8933201ca387119, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520522237196817793, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520522237196817793, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: m_Size.y
-      value: 1.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5520522237196817793, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6311960234374116109, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: m_Name
-      value: footPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 7193302223525636790, guid: 89f03409164721c4b8933201ca387119, type: 3}
-      propertyPath: m_Name
-      value: headPoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 89f03409164721c4b8933201ca387119, type: 3}

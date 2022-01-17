@@ -19,13 +19,7 @@ public class bird : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-
-        for (int i =12; i < 200; i=+4)
-        {
-            CreateEnemy(8, 0);
-        }
-        
-
+        CreateAll();
     }
 
     // Update is called once per frame
@@ -52,33 +46,40 @@ public class bird : MonoBehaviour
             _isJumpPressed = false;
         }
     }
-
+    //遇到物体
     private void OnCollisionEnter2D(Collision2D other)
     {
+        //接触管子
         if (other.gameObject.CompareTag("Enemy"))
         {
             Invoke(nameof(Dead), 0.5f);
         }
     }
-
+    //得分
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("score"))
+        if (other.gameObject.CompareTag("Score"))
         {
             Score++;
         }
     }
-
+    //死亡
     void Dead()
     {
         Score = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    void CreateEnemy(float x,float y)
+    //生成管子
+    void CreateAll()
     {
-        Instantiate(enemy,new Vector3(x,y,0f),Quaternion.identity);
-
+        for (int i = 12; i < 200; i += 4)
+        {
+            CreateEnemy(i, Random.Range(-3f, 3f));
+        }
+    }
+    void CreateEnemy(float x, float y)
+    {
+        Instantiate(enemy, new Vector3(x, y, 0f), Quaternion.identity);
     }
 
 

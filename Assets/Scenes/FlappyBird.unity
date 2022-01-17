@@ -381,8 +381,8 @@ GameObject:
   - component: {fileID: 1024300233}
   - component: {fileID: 1024300232}
   - component: {fileID: 1024300231}
-  - component: {fileID: 1024300235}
   - component: {fileID: 1024300236}
+  - component: {fileID: 1024300235}
   m_Layer: 0
   m_Name: bird
   m_TagString: Untagged
@@ -489,7 +489,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1024300230}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.17, y: -0.297, z: 0}
+  m_LocalPosition: {x: 1.27, y: 1.92, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -510,7 +510,7 @@ MonoBehaviour:
   Speed: 50
   JumpForce: 3
   Score: 0
-  enemy: {fileID: 0}
+  enemy: {fileID: 4547105492105401897, guid: e182cd83d6aa3f64abd454619862c54e, type: 3}
 --- !u!58 &1024300236
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -524,9 +524,9 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.0029218495, y: 0}
   serializedVersion: 2
-  m_Radius: 0.35416666
+  m_Radius: 0.29280582
 --- !u!1 &1148331898
 GameObject:
   m_ObjectHideFlags: 0
@@ -745,7 +745,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 3.53
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -769,7 +769,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498766079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.17, y: -0.297, z: -10}
+  m_LocalPosition: {x: 1.27, y: 1.92, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -848,7 +848,7 @@ MonoBehaviour:
   m_Follow: {fileID: 1024300234}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 5
+    OrthographicSize: 3.53
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0
@@ -869,7 +869,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697254074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.17, y: -0.297, z: -10}
+  m_LocalPosition: {x: 1.27, y: 1.92, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2077362791}

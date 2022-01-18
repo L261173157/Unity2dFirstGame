@@ -19,7 +19,7 @@ public class bird : MonoBehaviour
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        CreateAll();
+        //CreateAll();
     }
 
     // Update is called once per frame
@@ -60,7 +60,12 @@ public class bird : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Score"))
         {
+            //加分
             Score++;
+            //创建障碍
+            CreateAll();
+
+
         }
     }
     //死亡
@@ -69,10 +74,11 @@ public class bird : MonoBehaviour
         Score = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    //生成管子
+    //生成障碍
     void CreateAll()
     {
-        for (int i = 12; i < 200; i += 4)
+        var birdPosition=transform.position.x;
+        for (float i = birdPosition+4; i < birdPosition+20; i += 4)
         {
             CreateEnemy(i, Random.Range(-3f, 3f));
         }

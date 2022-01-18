@@ -14,12 +14,14 @@ public class bird : MonoBehaviour
 
     private Rigidbody2D _rb;
     private bool _isJumpPressed;
+    [SerializeField]
+    private int _scoreTimes;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        //CreateAll();
+        CreateAll(6,3);
     }
 
     // Update is called once per frame
@@ -56,16 +58,19 @@ public class bird : MonoBehaviour
         }
     }
     //得分
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Score"))
         {
             //加分
             Score++;
-            //创建障碍
-            CreateAll();
-
-
+            //创建障碍:每2次在前方8位置创建2次障碍
+            _scoreTimes++;
+            if (_scoreTimes==2)
+            {
+                CreateAll(7,2);
+                _scoreTimes=0;
+            }
         }
     }
     //死亡
@@ -75,10 +80,10 @@ public class bird : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     //生成障碍
-    void CreateAll()
+    void CreateAll(float initial,int times)
     {
-        var birdPosition=transform.position.x;
-        for (float i = birdPosition+4; i < birdPosition+20; i += 4)
+        var birdPosition = transform.position.x;
+        for (float i = birdPosition + initial; i < birdPosition + initial+4*times; i += 4)
         {
             CreateEnemy(i, Random.Range(-3f, 3f));
         }

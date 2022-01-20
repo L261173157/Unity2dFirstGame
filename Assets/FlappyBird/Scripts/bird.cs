@@ -5,23 +5,23 @@ using UnityEngine.SceneManagement;
 
 public class bird : MonoBehaviour
 {
-
     public float Speed, JumpForce;
 
     public int Score;
 
-    public GameObject enemy;
+    public GameObject enemy,line,backGround;
 
     private Rigidbody2D _rb;
     private bool _isJumpPressed;
     [SerializeField]
     private int _scoreTimes;
+    private float EnemyInitialPos,BackInitialPos=6;
 
     // Start is called before the first frame update
     void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        CreateAll(6,3);
+        CreateAll(6, 3);
     }
 
     // Update is called once per frame
@@ -66,10 +66,10 @@ public class bird : MonoBehaviour
             Score++;
             //创建障碍:每2次在前方8位置创建2次障碍
             _scoreTimes++;
-            if (_scoreTimes==2)
+            if (_scoreTimes == 2)
             {
-                CreateAll(7,2);
-                _scoreTimes=0;
+                CreateAll(7, 2);
+                _scoreTimes = 0;
             }
         }
     }
@@ -80,17 +80,40 @@ public class bird : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     //生成障碍
-    void CreateAll(float initial,int times)
+    void CreateAll(float initial, int times)
     {
         var birdPosition = transform.position.x;
-        for (float i = birdPosition + initial; i < birdPosition + initial+4*times; i += 4)
+        Debug.Log("initial:" + initial + "  times:" + times + "  position:" + birdPosition);
+        for (int i = 0; i < times; i++)
         {
-            CreateEnemy(i, Random.Range(-3f, 3f));
+            CreateEnemy(birdPosition + initial + 4 * i, Random.Range(-1.5f, 2.5f));
+            CreateLine(birdPosition+initial+7*i,-0.5f);
+            CreateBackGround(birdPosition+initial+6*i,0);
+        }
+    }
+    //生成障碍（新）
+    void Creat()
+    {
+        //生成背景
+        for (int i = 0; i < 3; i++)
+        {
+            CreateBackGround(BackInitialPos+6*i,0);
+            CreateLine(BackInitialPos+6*i,-0.5f);
         }
     }
     void CreateEnemy(float x, float y)
     {
         Instantiate(enemy, new Vector3(x, y, 0f), Quaternion.identity);
+    }
+
+    void CreateLine(float x, float y)
+    {
+        Instantiate(line, new Vector3(x, y, 0f), Quaternion.identity);
+    }
+
+    void CreateBackGround(float x, float y)
+    {
+        Instantiate(backGround, new Vector3(x, y, 0f), Quaternion.identity);
     }
 
 

@@ -5,32 +5,42 @@ using UnityEngine.SceneManagement;
 
 public class bird : MonoBehaviour
 {
-    public float Speed, JumpForce;
+    public float Speed, JumpForce, rotationSpeed;
 
     public int Score;
 
-    public GameObject enemy,line,backGround;
+    public GameObject enemy, line, backGround;
 
     private Rigidbody2D _rb;
     private bool _isJumpPressed;
+
     [SerializeField]
     private int _scoreTimes;
-    private float EnemyInitialPos,BackInitialPos=6;
+
+    private float EnemyInitialPos, BackInitialPos;
+
+    private Quaternion birdUPTo, birdDownTo;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _rb = GetComponent<Rigidbody2D>();
-        CreateAll(6, 3);
+        EnemyInitialPos = 6;
+        BackInitialPos = 0;
+        CreateBackGround(5);
+        CreateEnemy(5);
+        birdUPTo = Quaternion.Euler(0, 0, 30f);
+        birdDownTo = Quaternion.Euler(0, 0, -30f);
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (Input.GetButtonDown("Jump"))
         {
             _isJumpPressed = true;
         }
+        SwitchAnimation();
     }
 
     private void FixedUpdate()
@@ -38,7 +48,8 @@ public class bird : MonoBehaviour
         Movement();
     }
 
-    void Movement()
+    //运动
+    private void Movement()
     {
         //x速度
         _rb.velocity = new Vector2(Speed * Time.fixedDeltaTime, _rb.velocity.y);
@@ -48,6 +59,7 @@ public class bird : MonoBehaviour
             _isJumpPressed = false;
         }
     }
+
     //遇到物体
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -57,64 +69,93 @@ public class bird : MonoBehaviour
             Invoke(nameof(Dead), 0.5f);
         }
     }
-    //得分
+
+    //得分及生成后续
     private void OnTriggerExit2D(Collider2D other)
     {
+        Debug.Log("exit pass");
         if (other.gameObject.CompareTag("Score"))
         {
             //加分
             Score++;
-            //创建障碍:每2次在前方8位置创建2次障碍
+            Debug.Log("score:"+Score);
+            //生成前方物体
             _scoreTimes++;
-            if (_scoreTimes == 2)
+            if (_scoreTimes == 4)
             {
-                CreateAll(7, 2);
+                CreateBackGround(3);
+                CreateEnemy(4);
                 _scoreTimes = 0;
             }
         }
     }
+
     //死亡
-    void Dead()
+    private void Dead()
     {
         Score = 0;
+        _scoreTimes = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    //生成障碍
-    void CreateAll(float initial, int times)
+
+    //切换姿态动画
+    private void SwitchAnimation()
     {
-        var birdPosition = transform.position.x;
-        Debug.Log("initial:" + initial + "  times:" + times + "  position:" + birdPosition);
+        //身体方向 -30~30
+        if (_rb.velocity.y > 0)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, birdUPTo, Time.deltaTime * rotationSpeed);
+        }
+        if (_rb.velocity.y < 0)
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, birdDownTo, Time.deltaTime * rotationSpeed);
+        }
+    }
+
+    #region 生成物体
+
+    //生成障碍
+    private void CreateEnemy(int times)
+    {
+        float currentPos = 0;
         for (int i = 0; i < times; i++)
         {
-            CreateEnemy(birdPosition + initial + 4 * i, Random.Range(-1.5f, 2.5f));
-            CreateLine(birdPosition+initial+7*i,-0.5f);
-            CreateBackGround(birdPosition+initial+6*i,0);
+            CreateEnemyBase(EnemyInitialPos + 4 * i, Random.Range(-1.5f, 2.5f));
+            currentPos = EnemyInitialPos + 4 * i;
         }
+        EnemyInitialPos = currentPos + 4;
     }
-    //生成障碍（新）
-    void Creat()
+
+    //生成背景
+    private void CreateBackGround(int times)
     {
-        //生成背景
-        for (int i = 0; i < 3; i++)
+        float currentPos = 0;
+        for (int i = 0; i < times; i++)
         {
-            CreateBackGround(BackInitialPos+6*i,0);
-            CreateLine(BackInitialPos+6*i,-0.5f);
+            CreateBackGroundBase(BackInitialPos + 6 * i, 0);
+            CreateLineBase(BackInitialPos + 6 * i, -0.5f);
+            currentPos = BackInitialPos + 6 * i;
         }
+        BackInitialPos = currentPos + 6;
     }
-    void CreateEnemy(float x, float y)
+
+    //创建敌人基础方法
+    private void CreateEnemyBase(float x, float y)
     {
         Instantiate(enemy, new Vector3(x, y, 0f), Quaternion.identity);
     }
 
-    void CreateLine(float x, float y)
+    //创建基准线基础方法
+    private void CreateLineBase(float x, float y)
     {
         Instantiate(line, new Vector3(x, y, 0f), Quaternion.identity);
     }
 
-    void CreateBackGround(float x, float y)
+    //创建背景基础方法
+    private void CreateBackGroundBase(float x, float y)
     {
         Instantiate(backGround, new Vector3(x, y, 0f), Quaternion.identity);
     }
 
-
+    #endregion 生成物体
 }

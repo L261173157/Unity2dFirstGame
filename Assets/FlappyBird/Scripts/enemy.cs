@@ -21,7 +21,7 @@ public class enemy : MonoBehaviour
     void DestroySelf()
     {
         float disToBird = transform.position.x - bird.transform.position.x;
-        if (disToBird < -8f)
+        if (disToBird < -12f)
         {
             Destroy(gameObject);
         }

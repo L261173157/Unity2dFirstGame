@@ -27,8 +27,8 @@ public class bird : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         EnemyInitialPos = 6;
         BackInitialPos = 0;
-        CreateBackGround(5);
-        CreateEnemy(5);
+        CreateBackGround(10);
+        CreateEnemy(10);
         birdUPTo = Quaternion.Euler(0, 0, 30f);
         birdDownTo = Quaternion.Euler(0, 0, -30f);
     }

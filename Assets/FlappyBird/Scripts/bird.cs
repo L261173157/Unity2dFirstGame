@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class bird : MonoBehaviour
 {
@@ -75,6 +77,25 @@ public class bird : MonoBehaviour
     {
         Debug.Log("exit pass");
         if (other.gameObject.CompareTag("Score"))
+        {
+            //加分
+            Score++;
+            Debug.Log("score:"+Score);
+            //生成前方物体
+            _scoreTimes++;
+            if (_scoreTimes == 4)
+            {
+                CreateBackGround(3);
+                CreateEnemy(4);
+                _scoreTimes = 0;
+            }
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        Debug.Log("exit pass");
+        if (col.gameObject.CompareTag("Score"))
         {
             //加分
             Score++;

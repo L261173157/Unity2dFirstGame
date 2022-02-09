@@ -261,14 +261,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45f89ac6bbf63e04999d63fdbfc5c196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 70
+  Speed: 1.5
   JumpForce: 3
   rotationSpeed: 10
   Score: 0
   enemy: {fileID: 4547105492105401897, guid: e182cd83d6aa3f64abd454619862c54e, type: 3}
   line: {fileID: 6989203308353971579, guid: a2bc0cd1b453e214e834620cc2d08666, type: 3}
   backGround: {fileID: 4042411929951682446, guid: aaf92a224908b57468b430e0eef33f81, type: 3}
-  _scoreTimes: 0
 --- !u!58 &1024300236
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -284,7 +283,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.0001
+  m_Radius: 0.3
 --- !u!1 &1498766079
 GameObject:
   m_ObjectHideFlags: 0
@@ -363,7 +362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498766079}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.3187904, y: -0.000029146671, z: -10}
+  m_LocalPosition: {x: 3.3222356, y: -0.1475907, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -464,7 +463,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697254074}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.2877488, y: -0.14759594, z: -10}
+  m_LocalPosition: {x: 2.2890127, y: -0.14759594, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2077362791}
@@ -506,7 +505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!61 &1777937786
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -550,7 +549,17 @@ CompositeCollider2D:
   m_GeometryType: 1
   m_GenerationType: 0
   m_EdgeRadius: 0
-  m_ColliderPaths: []
+  m_ColliderPaths:
+  - m_Collider: {fileID: 1777937786}
+    m_ColliderPaths:
+    - - X: 99999997659
+        Y: -52500000
+      - X: 99999997659
+        Y: 52500000
+      - X: -29541016
+        Y: 52499707
+      - X: -29540723
+        Y: -52500000
   m_CompositePaths:
     m_Paths:
     - - {x: 10000, y: -5.25}

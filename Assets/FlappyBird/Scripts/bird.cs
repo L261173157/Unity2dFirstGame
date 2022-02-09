@@ -16,7 +16,6 @@ public class bird : MonoBehaviour
     private Rigidbody2D _rb;
     private bool _isJumpPressed;
 
-    [SerializeField]
     private int _scoreTimes;
 
     private float EnemyInitialPos, BackInitialPos;
@@ -42,6 +41,7 @@ public class bird : MonoBehaviour
         {
             _isJumpPressed = true;
         }
+
         SwitchAnimation();
     }
 
@@ -54,7 +54,7 @@ public class bird : MonoBehaviour
     private void Movement()
     {
         //x速度
-        _rb.velocity = new Vector2(Speed * Time.fixedDeltaTime, _rb.velocity.y);
+        _rb.velocity = new Vector2(Speed, _rb.velocity.y);
         if (_isJumpPressed)
         {
             _rb.velocity = new Vector2(_rb.velocity.x, JumpForce);
@@ -75,12 +75,11 @@ public class bird : MonoBehaviour
     //得分及生成后续
     private void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("exit pass");
         if (other.gameObject.CompareTag("Score"))
         {
             //加分
             Score++;
-            Debug.Log("score:"+Score);
+            Debug.Log("score:" + Score);
             //生成前方物体
             _scoreTimes++;
             if (_scoreTimes == 4)
@@ -92,24 +91,6 @@ public class bird : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        Debug.Log("exit pass");
-        if (col.gameObject.CompareTag("Score"))
-        {
-            //加分
-            Score++;
-            Debug.Log("score:"+Score);
-            //生成前方物体
-            _scoreTimes++;
-            if (_scoreTimes == 4)
-            {
-                CreateBackGround(3);
-                CreateEnemy(4);
-                _scoreTimes = 0;
-            }
-        }
-    }
 
     //死亡
     private void Dead()
@@ -127,6 +108,7 @@ public class bird : MonoBehaviour
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, birdUPTo, Time.deltaTime * rotationSpeed);
         }
+
         if (_rb.velocity.y < 0)
         {
             transform.rotation = Quaternion.Slerp(transform.rotation, birdDownTo, Time.deltaTime * rotationSpeed);
@@ -144,6 +126,7 @@ public class bird : MonoBehaviour
             CreateEnemyBase(EnemyInitialPos + 4 * i, Random.Range(-1.5f, 2.5f));
             currentPos = EnemyInitialPos + 4 * i;
         }
+
         EnemyInitialPos = currentPos + 4;
     }
 
@@ -157,6 +140,7 @@ public class bird : MonoBehaviour
             CreateLineBase(BackInitialPos + 6 * i, -0.5f);
             currentPos = BackInitialPos + 6 * i;
         }
+
         BackInitialPos = currentPos + 6;
     }
 

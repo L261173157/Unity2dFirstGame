@@ -52,20 +52,21 @@
     <ImplicitlyExpandDesignTimeFacades>false</ImplicitlyExpandDesignTimeFacades>
   </PropertyGroup>
   <ItemGroup>
-     <Compile Include="Assets\Sprites\EnemyFrog.cs" />
-     <Compile Include="Assets\Sprites\SoundManagerNew.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\EnemyFrog.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\SoundManagerNew.cs" />
      <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\ParallaxBackground_0.cs" />
-     <Compile Include="Assets\Sprites\Menu.cs" />
-     <Compile Include="Assets\Sprites\Enter.cs" />
-     <Compile Include="Assets\Sprites\Enemy.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\Menu.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\Enter.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\Enemy.cs" />
      <Compile Include="Assets\FlappyBird\Scripts\bird.cs" />
-     <Compile Include="Assets\Sprites\UI.cs" />
-     <Compile Include="Assets\Sprites\Parallax.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\UI.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\Parallax.cs" />
      <Compile Include="Assets\FlappyBird\Scripts\enemy.cs" />
      <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
-     <Compile Include="Assets\Sprites\PlayerController.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\PlayerController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\2DBeginner_Third-PartyNotice.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />

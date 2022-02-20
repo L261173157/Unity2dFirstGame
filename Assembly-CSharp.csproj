@@ -63,8 +63,8 @@
      <Compile Include="Assets\Sunnyland\game\Sprites\Parallax.cs" />
      <Compile Include="Assets\FlappyBird\Scripts\enemy.cs" />
      <Compile Include="Assets\Free 2D Cartoon Parallax Background\Demo\Script\BackgroundControl_0.cs" />
-     <Compile Include="Assets\Sunnyland\game\Sprites\PlayerController.cs" />
      <Compile Include="Assets\Scripts\RubyController.cs" />
+     <Compile Include="Assets\Sunnyland\game\Sprites\PlayerController.cs" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\2DBeginner_Third-PartyNotice.txt" />

@@ -9,6 +9,11 @@ public class RubyController : MonoBehaviour
     public int maxHealth = 5;
     private int currentHealth;
 
+    public int health
+    {
+        get { return currentHealth; }
+    }
+
     private Rigidbody2D _rigidbody;
 
     private float horizontal;
@@ -41,7 +46,7 @@ public class RubyController : MonoBehaviour
         _rigidbody.MovePosition(position);
     }
 
-    void ChangeHealth(int amount)
+    public void ChangeHealth(int amount)
     {
         currentHealth = Mathf.Clamp(currentHealth + amount, 0, maxHealth);
         Debug.Log(currentHealth + "/" + maxHealth);

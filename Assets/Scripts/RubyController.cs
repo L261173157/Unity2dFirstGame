@@ -8,6 +8,7 @@ public class RubyController : MonoBehaviour
     public float speed = 3f;
     public int maxHealth = 5;
     public float timeInvincible = 2.0f;
+    public GameObject projectilePrefab;
 
     private int _currentHealth;
 
@@ -43,12 +44,12 @@ public class RubyController : MonoBehaviour
         _horizontal = Input.GetAxis("Horizontal");
         _vertical = Input.GetAxis("Vertical");
         Vector2 move = new Vector2(_horizontal, _vertical);
-        if(!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
+        if (!Mathf.Approximately(move.x, 0.0f) || !Mathf.Approximately(move.y, 0.0f))
         {
             _lookDirection.Set(move.x, move.y);
             _lookDirection.Normalize();
         }
-        
+
         _animator.SetFloat("Look X", _lookDirection.x);
         _animator.SetFloat("Look Y", _lookDirection.y);
         _animator.SetFloat("Speed", move.magnitude);
@@ -59,6 +60,11 @@ public class RubyController : MonoBehaviour
             _invincibleTimer -= Time.deltaTime;
             if (_invincibleTimer < 0)
                 _isInvincible = false;
+        }
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            Launch();
         }
     }
 
@@ -84,5 +90,14 @@ public class RubyController : MonoBehaviour
 
         _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
         Debug.Log(_currentHealth + "/" + maxHealth);
+    }
+
+    private void Launch()
+    {
+        GameObject projectileObject =
+            Instantiate(projectilePrefab, _rigidbody.position + Vector2.up * 0.5f, Quaternion.identity);
+        Projectile projectile = projectileObject.GetComponent<Projectile>();
+        projectile.Launch(_lookDirection, 300);
+        _animator.SetTrigger("Launch");
     }
 }

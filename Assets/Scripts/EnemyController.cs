@@ -7,12 +7,14 @@ public class EnemyController : MonoBehaviour
     public float speed;
     public bool vertical;
     public float changeTime = 3.0f;
+    public ParticleSystem smokeEffect;
+    public ParticleSystem hitEffect;
 
     private Rigidbody2D _rigidbody2D;
     private float _timer;
     private int _direction = 1;
     private Animator _animator;
-    private bool broken=true;
+    private bool broken = true;
 
     // 在第一次帧更新之前调用 Start
     void Start()
@@ -20,6 +22,7 @@ public class EnemyController : MonoBehaviour
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _timer = changeTime;
         _animator = GetComponent<Animator>();
+        
     }
 
     void Update()
@@ -76,5 +79,7 @@ public class EnemyController : MonoBehaviour
         broken = false;
         _rigidbody2D.simulated = false;
         _animator.SetTrigger("Fixed");
+        Instantiate(hitEffect,_rigidbody2D.position,Quaternion.identity);
+        smokeEffect.Stop();
     }
 }

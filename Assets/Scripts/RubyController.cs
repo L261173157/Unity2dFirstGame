@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RubyController : MonoBehaviour
@@ -11,6 +8,7 @@ public class RubyController : MonoBehaviour
     public GameObject projectilePrefab;
 
     private int _currentHealth;
+    private AudioSource _audioSource;
 
     public int Health
     {
@@ -36,6 +34,7 @@ public class RubyController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _currentHealth = maxHealth;
         _animator = GetComponent<Animator>();
+        _audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +65,20 @@ public class RubyController : MonoBehaviour
         {
             Launch();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            RaycastHit2D hit2D = Physics2D.Raycast(_rigidbody.position + Vector2.up * 0.5f, _lookDirection, 1.5f,
+                LayerMask.GetMask("NPC"));
+            if (hit2D.collider != null)
+            {
+                NonPlayerCharacter character = hit2D.collider.gameObject.GetComponent<NonPlayerCharacter>();
+                if (character != null)
+                {
+                    character.DisplayDialog();
+                }
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -90,6 +103,7 @@ public class RubyController : MonoBehaviour
 
         _currentHealth = Mathf.Clamp(_currentHealth + amount, 0, maxHealth);
         Debug.Log(_currentHealth + "/" + maxHealth);
+        UIHealthBar.instance.SetValue(_currentHealth / (float)maxHealth);
     }
 
     private void Launch()
@@ -99,5 +113,10 @@ public class RubyController : MonoBehaviour
         Projectile projectile = projectileObject.GetComponent<Projectile>();
         projectile.Launch(_lookDirection, 300);
         _animator.SetTrigger("Launch");
+    }
+
+    public void PlaySound(AudioClip audioClip)
+    {
+        _audioSource.PlayOneShot(audioClip);
     }
 }
